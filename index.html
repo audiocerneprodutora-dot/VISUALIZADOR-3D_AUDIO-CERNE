@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Cerne - Produtora de Vídeos e Simulações 3D</title>
+    <meta name="description" content="Vídeos animados, simulações 3D interativas e campanhas virais que fazem sua marca crescer. Produção audiovisual profissional.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --secondary: #ffffff;
+            --accent: #e8e8e8;
+            --gold: #FFD700;
+            --text: #333333;
+            --text-light: #666666;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .hero-3d {
+            margin-top: 100px;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: var(--secondary);
+            text-align: center;
+        }
+
+        .hero-3d h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 800;
+            margin-bottom: 24px;
+        }
+
+        .hero-3d-subtitle {
+            font-size: clamp(18px, 2vw, 24px);
+            color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 60px auto;
+            max-width: 1000px;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-5px);
+            border-color: var(--gold);
+        }
+
+        .benefit-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--gold);
+        }
+
+        .benefit-card p {
+            color: rgba(255,255,255,0.8);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .cta-info {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid var(--gold);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 40px auto 30px;
+            max-width: 600px;
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .hero-3d-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%);
+            color: var(--primary);
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-3d-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.6);
+        }
+
+        .visualizador-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        #controls-bar {
+            padding: 25px 30px;
+            background: #343541;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 1024px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+            border: 2px solid #2d2d2d;
+            border-bottom: none;
+            margin: 0 auto;
+        }
+
+        .viewer-logo-text {
+            font-size: 2em;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        #upload-button {
+            display: inline-block;
+            padding: 14px 30px;
+            cursor: pointer;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .view-button, .action-button {
+            padding: 10px 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 100%);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .view-button:hover, .action-button:hover {
+            background: linear-gradient(135deg, #5a5a5a 0%, #3d3d3d 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .action-button.delete {
+            background: linear-gradient(135deg, #8b0000 0%, #660000 100%);
+        }
+
+        .action-button.delete:hover {
+            background: linear-gradient(135deg, #a00000 0%, #7a0000 100%);
+        }
+
+        #status-message {
+            margin: 20px 0 0 0;
+            padding-top: 15px;
+            font-size: 0.9em;
+            color: #e0e0e0;
+            font-weight: 500;
+            min-height: 24px;
+        }
+
+        #container { 
+            width: 100%;
+            max-width: 1024px;
+            aspect-ratio: 1 / 1;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6); 
+            border: 2px solid #e0e0e0;
+            border-top: none;
+            background: #000000;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        #lighting-controls {
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #343541;
+            border: 2px solid #2d2d2d;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .control-group {
+            margin-bottom: 25px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-value {
+            background: #2d2d2d;
+            padding: 5px 14px;
+            border-radius: 12px;
+            font-size: 0.9em;
+            color: #ffffff;
+            min-width: 55px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: #1a1a1a;
+            outline: none;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d2d2d 0%, #000000 100%);
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            border: 2px solid #ffffff;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d2d2d 0%, #000000 100%);
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+            border: 2px solid #ffffff;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #1a1a1a;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--gold);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        .cta-bottom {
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 35px 40px;
+            background: #343541;
+            border-radius: 0 0 20px 20px;
+            border: 2px solid #2d2d2d;
+            border-top: none;
+            text-align: center;
+        }
+
+        .cta-bottom h3 {
+            color: var(--gold);
+            font-size: 1.4em;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-bottom p {
+            color: #e0e0e0;
+            font-size: 1em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-bottom-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25D366;
+            color: white;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        .cta-bottom-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <span class="logo-text">AUDIO CERNE</span>
+            <a href="https://wa.me/5531972385529" class="nav-cta">Solicitar Orçamento</a>
+        </nav>
+    </header>
+
+    <section class="hero-3d">
+        <div class="container">
+            <h1>Visualização 3D Interativa em Tempo Real</h1>
+            <p class="hero-3d-subtitle">Transforme a forma como você apresenta seus projetos</p>
+            
+            <p style="max-width: 800px; margin: 0 auto 50px; font-size: 17px; line-height: 1.7;">
+                Imagine seus clientes explorando cada detalhe do seu produto, cenário ou projeto arquitetônico diretamente no navegador - sem instalações, sem complicações. Nossa tecnologia de visualização 3D em tempo real permite que você:
+            </p>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">✦</div>
+                    <h3>Apresente com Impacto</h3>
+                    <p>Modelos 3D interativos que seus clientes podem girar, aproximar e explorar em 360°</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">✦</div>
+                    <h3>Valide Antes de Produzir</h3>
+                    <p>Simule ambientes, produtos e cenários com precisão fotorrealística antes de investir na produção física</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">✦</div>
+                    <h3>Feche Negócios Mais Rápido</h3>
+                    <p>Elimine dúvidas e objeções mostrando exatamente como ficará o resultado final</p>
+                </div>
+            </div>
+
+            <div class="cta-info">
+                📦 Solicite os modelos e use nosso visualizador | Visualização instantânea | Sem necessidade de plugins
+            </div>
+
+            <a href="https://wa.me/5531972385529" class="hero-3d-btn">
+                <span>🚀</span>
+                Solicite um Teste Gratuito
+            </a>
+        </div>
+    </section>
+
+    <section class="visualizador-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>VISUALIZADOR 3D PROFISSIONAL</h2>
+            </div>
+
+            <div id="controls-bar">
+                <div class="viewer-logo-text">AUDIO CERNE</div>
+                <label for="file-upload" id="upload-button">Carregar Modelo</label>
+                <input type="file" id="file-upload" accept=".glb, .gltf" style="display: none;">
+                
+                <div class="button-group">
+                    <button class="action-button" id="center-button">Centralizar</button>
+                    <button class="view-button" id="view-top">Topo</button>
+                    <button class="view-button" id="view-left">Esquerdo</button>
+                    <button class="view-button" id="view-right">Direito</button>
+                    <button class="view-button" id="view-perspective">Perspectiva</button>
+                    <button class="action-button delete" id="delete-button">Deletar</button>
+                </div>
+                
+                <p id="status-message">Aguardando modelo 3D...</p>
+            </div>
+
+            <div id="container"></div>
+
+            <div id="lighting-controls">
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>INTENSIDADE DE ILUMINAÇÃO</span>
+                        <span class="control-value" id="light-value">100%</span>
+                    </div>
+                    <input type="range" min="0" max="200" value="100" class="slider" id="light-slider">
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>BRILHO (GLOW/BLOOM)</span>
+                        <span class="control-value" id="bloom-value">40%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="40" class="slider" id="bloom-slider">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>ROTAÇÃO AUTOMÁTICA</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="auto-rotate-toggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="control-group" id="rotation-speed-group" style="display: none;">
+                    <div class="control-label">
+                        <span>VELOCIDADE DE ROTAÇÃO</span>
+                        <span class="control-value" id="rotation-value">50%</span>
+                    </div>
+                    <input type="range" min="10" max="100" value="50" class="slider" id="rotation-slider">
+                </div>
+
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>INTENSIDADE DE SOMBRAS</span>
+                        <span class="control-value" id="shadow-value">100%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="100" class="slider" id="shadow-slider">
+                </div>
+            </div>
+
+            <div class="cta-bottom">
+                <h3>Visualizador 3D Personalizado para sua Empresa</h3>
+                <p>Sua marca merece um visualizador exclusivo. Desenvolvemos soluções personalizadas com sua identidade visual, logo e conceito único.</p>
+                <a href="https://wa.me/5531972385529" class="cta-bottom-btn">
+                    💬 Solicite seu Orçamento
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5531972385529" class="whatsapp-float">💬</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/RGBELoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+
+    <script>
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        const container = document.getElementById('container');
+        const statusMessage = document.getElementById('status-message');
+        let currentModel = null;
+        let modelCenter = new THREE.Vector3();
+        let modelSize = new THREE.Vector3();
+
+        // Variáveis para controle de iluminação
+        let lightIntensity = 1.0;
+        let bloomStrength = 0.4;
+        let autoRotate = false;
+        let rotationSpeed = 0.005;
+
+        const scene = new THREE.Scene();
+        
+        // Fundo gradiente escuro
+        const canvas = document.createElement('canvas');
+        canvas.width = 2;
+        canvas.height = 512;
+        const context = canvas.getContext('2d');
+        const gradient = context.createLinearGradient(0, 0, 0, 512);
+        gradient.addColorStop(0, '#000000');
+        gradient.addColorStop(0.5, '#0a0a0a');
+        gradient.addColorStop(1, '#1a1a1a');
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, 2, 512);
+        scene.background = new THREE.CanvasTexture(canvas);
+
+        const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 1000);
+        camera.position.set(3, 3, 5);
+
+        const renderer = new THREE.WebGLRenderer({ 
+            antialias: !isIOS,
+            powerPreference: 'high-performance'
+        });
+        
+        const size = Math.min(container.clientWidth, container.clientHeight);
+        renderer.setSize(size, size);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.autoRotate = false;
+        controls.autoRotateSpeed = 2.0;
+
+        // Iluminação profissional
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+
+        const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        keyLight.position.set(5, 8, 5);
+        keyLight.castShadow = true;
+        keyLight.shadow.mapSize.width = 2048;
+        keyLight.shadow.mapSize.height = 2048;
+        keyLight.shadow.radius = 4;
+        scene.add(keyLight);
+
+        const fillLight = new THREE.DirectionalLight(0xffffff, 0.4);
+        fillLight.position.set(-5, 3, -3);
+        scene.add(fillLight);
+
+        const rimLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        rimLight.position.set(-3, 5, -8);
+        scene.add(rimLight);
+
+        // Carregar HDRI
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        pmremGenerator.compileEquirectangularShader();
+
+        new THREE.RGBELoader()
+            .load('https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/studio_small_09_1k.hdr', 
+                function(texture) {
+                    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+                    scene.environment = envMap;
+                    texture.dispose();
+                    pmremGenerator.dispose();
+                });
+
+        // Post-processing
+        let composer;
+        let bloomPass;
+        if (!isIOS) {
+            composer = new THREE.EffectComposer(renderer);
+            composer.addPass(new THREE.RenderPass(scene, camera));
+            bloomPass = new THREE.UnrealBloomPass(
+                new THREE.Vector2(size, size), 0.4, 0.6, 0.85
+            );
+            composer.addPass(bloomPass);
+        }
+
+        // Controles de Iluminação e Bloom
+        const lightSlider = document.getElementById('light-slider');
+        const lightValue = document.getElementById('light-value');
+        const bloomSlider = document.getElementById('bloom-slider');
+        const bloomValue = document.getElementById('bloom-value');
+        const autoRotateToggle = document.getElementById('auto-rotate-toggle');
+        const rotationSlider = document.getElementById('rotation-slider');
+        const rotationValue = document.getElementById('rotation-value');
+        const rotationSpeedGroup = document.getElementById('rotation-speed-group');
+        const shadowSlider = document.getElementById('shadow-slider');
+        const shadowValue = document.getElementById('shadow-value');
+
+        lightSlider.addEventListener('input', (e) => {
+            lightIntensity = e.target.value / 100;
+            lightValue.textContent = e.target.value + '%';
+            
+            // Atualizar intensidade das luzes
+            ambientLight.intensity = 0.3 * lightIntensity;
+            keyLight.intensity = 1.2 * lightIntensity;
+            fillLight.intensity = 0.4 * lightIntensity;
+            rimLight.intensity = 0.6 * lightIntensity;
+            renderer.toneMappingExposure = 1.2 * lightIntensity;
+        });
+
+        bloomSlider.addEventListener('input', (e) => {
+            bloomStrength = e.target.value / 100;
+            bloomValue.textContent = e.target.value + '%';
+            
+            // Atualizar bloom
+            if (bloomPass) {
+                bloomPass.strength = bloomStrength;
+            }
+        });
+
+        autoRotateToggle.addEventListener('change', (e) => {
+            controls.autoRotate = e.target.checked;
+            rotationSpeedGroup.style.display = e.target.checked ? 'block' : 'none';
+        });
+
+        rotationSlider.addEventListener('input', (e) => {
+            rotationSpeed = e.target.value / 1000;
+            rotationValue.textContent = e.target.value + '%';
+            controls.autoRotateSpeed = rotationSpeed * 100;
+        });
+
+        shadowSlider.addEventListener('input', (e) => {
+            const shadowIntensity = e.target.value / 100;
+            shadowValue.textContent = e.target.value + '%';
+            keyLight.shadow.radius = 4 * shadowIntensity;
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            if (composer && !isIOS) {
+                composer.render();
+            } else {
+                renderer.render(scene, camera);
+            }
+        }
+        animate();
+
+        // Carregar modelo
+        const loader = new THREE.GLTFLoader();
+        document.getElementById('file-upload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            statusMessage.textContent = 'Carregando...';
+            const reader = new FileReader();
+            
+            reader.onload = (ev) => {
+                if (currentModel) {
+                    scene.remove(currentModel);
+                }
+
+                loader.parse(ev.target.result, '', function(gltf) {
+                    currentModel = gltf.scene;
+                    const box = new THREE.Box3().setFromObject(currentModel);
+                    modelCenter = box.getCenter(new THREE.Vector3());
+                    modelSize = box.getSize(new THREE.Vector3());
+                    
+                    currentModel.position.sub(modelCenter);
+                    currentModel.position.y -= box.min.y;
+                    
+                    scene.add(currentModel);
+                    
+                    const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                    const distance = maxDim * 2;
+                    camera.position.set(modelCenter.x, modelCenter.y + maxDim * 0.3, modelCenter.z + distance);
+                    controls.target.copy(modelCenter);
+                    controls.update();
+                    
+                    statusMessage.textContent = '✅ Carregado!';
+                });
+            };
+            
+            reader.readAsArrayBuffer(file);
+        });
+
+        document.getElementById('center-button').addEventListener('click', () => {
+            if (currentModel) {
+                const box = new THREE.Box3().setFromObject(currentModel);
+                modelCenter = box.getCenter(new THREE.Vector3());
+                modelSize = box.getSize(new THREE.Vector3());
+                
+                const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                const distance = maxDim * 2;
+                camera.position.set(modelCenter.x, modelCenter.y + maxDim * 0.3, modelCenter.z + distance);
+                controls.target.copy(modelCenter);
+                controls.update();
+            }
+        });
+
+        document.getElementById('view-top').addEventListener('click', () => {
+            if (currentModel) {
+                const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                camera.position.set(modelCenter.x, modelCenter.y + maxDim * 3, modelCenter.z);
+                controls.target.copy(modelCenter);
+                controls.update();
+            }
+        });
+
+        document.getElementById('view-left').addEventListener('click', () => {
+            if (currentModel) {
+                const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                camera.position.set(modelCenter.x - maxDim * 3, modelCenter.y, modelCenter.z);
+                controls.target.copy(modelCenter);
+                controls.update();
+            }
+        });
+
+        document.getElementById('view-right').addEventListener('click', () => {
+            if (currentModel) {
+                const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                camera.position.set(modelCenter.x + maxDim * 3, modelCenter.y, modelCenter.z);
+                controls.target.copy(modelCenter);
+                controls.update();
+            }
+        });
+
+        document.getElementById('view-perspective').addEventListener('click', () => {
+            if (currentModel) {
+                const maxDim = Math.max(modelSize.x, modelSize.y, modelSize.z);
+                const distance = maxDim * 2;
+                camera.position.set(modelCenter.x + distance * 0.5, modelCenter.y + maxDim * 0.5, modelCenter.z + distance);
+                controls.target.copy(modelCenter);
+                controls.update();
+            }
+        });
+
+        document.getElementById('delete-button').addEventListener('click', () => {
+            if (currentModel) {
+                scene.remove(currentModel);
+                currentModel = null;
+                statusMessage.textContent = 'Aguardando modelo 3D...';
+            }
+        });
+    </script>
+</body>
+</html>
